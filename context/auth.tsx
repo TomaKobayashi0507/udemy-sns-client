@@ -1,4 +1,5 @@
 import apiClient from "@/lib/apiClient";
+import { AxiosResponse } from "axios";
 import React, { ReactNode, useState, useContext, useEffect } from "react";
 
 interface AuthContextType {
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
       apiClient
         .get("/users/find")
-        .then((res) => {
+        .then((res: AxiosResponse<any, any>) => {
           setUser(res.data.user);
         })
         .catch((err) => {
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.setItem("auth_token", token);
     apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
     try {
-      apiClient.get("/users/find").then((res) => {
+      apiClient.get("/users/find").then((res: AxiosResponse<any, any>) => {
         setUser(res.data.user);
       });
     } catch (err) {
